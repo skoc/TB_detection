@@ -7,7 +7,8 @@ from keras.layers import Input, Convolution2D, MaxPooling2D, UpSampling2D, Dropo
 from keras.layers.core import Layer, Dense, Activation, Flatten, Reshape, Permute, Lambda
 from keras import objectives, optimizers, losses
 
-import calculateLoss
+from calculateLoss import *
+
 
 ############################################################################################################
 def unetOneBlock(blockInput, noOfFeatures, filterSize, dropoutRate):
