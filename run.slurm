@@ -10,7 +10,7 @@
 
 runId=01
 lossType='FTV'
-pathPrefix=/scratch/users/cfk29/SONER/
+pathPrefix=/scratch/users/cfk29/TB_detection/
 #13 dice, 14 tv, 15 ftv
 
 module load cuda/10.0
