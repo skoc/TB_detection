@@ -27,7 +27,7 @@ def main(argv):
     # nohup python tumorBudMain.py 6 1 tr >> out1 &
     # nohup python tumorBudMain.py 6 1 ts >> out1 &
     pathPrefix = argv[3]
-    layerNum = 4
+    layerNum = 5
     featNum = 32
     dropoutRate = 0.2
     

@@ -9,7 +9,6 @@ from keras import objectives, optimizers, losses
 
 import calculateLoss
 
-calculateLoss.dice_coef
 ############################################################################################################
 def unetOneBlock(blockInput, noOfFeatures, filterSize, dropoutRate):
     blockOutput = Convolution2D(noOfFeatures, filterSize, activation = 'relu', padding = 'same', 
