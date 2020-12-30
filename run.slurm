@@ -9,7 +9,7 @@
 #SBATCH --output="log.tb"
 
 runId=01
-lossType='FTV'
+lossType='DC'
 pathPrefix=/scratch/users/cfk29/TB_detection/
 #13 dice, 14 tv, 15 ftv
 
