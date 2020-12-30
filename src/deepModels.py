@@ -7,9 +7,9 @@ from keras.layers import Input, Convolution2D, MaxPooling2D, UpSampling2D, Dropo
 from keras.layers.core import Layer, Dense, Activation, Flatten, Reshape, Permute, Lambda
 from keras import objectives, optimizers, losses
 
-from calculateLoss import *
+import calculateLoss
 
-
+calculateLoss.dice_coef
 ############################################################################################################
 def unetOneBlock(blockInput, noOfFeatures, filterSize, dropoutRate):
     blockOutput = Convolution2D(noOfFeatures, filterSize, activation = 'relu', padding = 'same', 
@@ -156,6 +156,6 @@ def unet(inputHeight, inputWidth, channelNo, outputChannelNos, outputTypes, laye
     [inputList, outputList, lossList] = createInputOutputLostLists(inputHeight, inputWidth, inputs, lastDeconv1, lastDeconv2, 
                                                                    lastDeconv3, lastDeconv4, outputChannelNos, outputTypes)
     model = Model(inputs = inputList, outputs = outputList)
-    model.compile(loss = lossList, loss_weights = taskWeights, optimizer = optimizer, metrics = [dice_coef])
+    model.compile(loss = lossList, loss_weights = taskWeights, optimizer = optimizer, metrics = [calculateLoss.dice_coef])
     return model
 ############################################################################################################
