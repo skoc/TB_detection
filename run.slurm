@@ -8,7 +8,7 @@
 #SBATCH --job-name="Tumor bud"
 #SBATCH --output="log.tb"
 
-runId=501
+runId=502
 lossType='DC'
 pathPrefix=/scratch/users/cfk29/TB_detection/
 #13 dice, 14 tv, 15 ftv
