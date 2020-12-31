@@ -14,15 +14,19 @@ from keras.utils import np_utils
 # Region-based Loss Functions
 ############################################################################################################
 # Dice Loss
-def dice_coef(y_true, y_pred, smooth=1):
-    intersection = K.sum(K.abs(y_true * y_pred), axis=-1)
-    return (2. * intersection + smooth) / (K.sum(K.square(y_true),-1) + K.sum(K.square(y_pred),-1) + smooth)
+def dice_coef(y_true, y_pred):
+    smooth = 1.
+    y_true_f = K.flatten(y_true)
+    y_pred_f = K.flatten(y_pred)
+    intersection = K.sum(y_true_f * y_pred_f)
+    score = (2. * intersection + smooth) / (K.sum(y_true_f) + K.sum(y_pred_f) + smooth)
+    return score
 
 def dice_coef_loss(y_weights):
-    def loss_fn(y_true, y_pred):
-        loss = 1-dice_coef(y_true, y_pred)
-        return K.mean(loss)
-    return loss_fn
+    def dice_loss(y_true, y_pred):
+        loss = 1 - dsc(y_true, y_pred)
+        return loss
+    return dice_loss
 ############################################################################################################
 # Tversky Loss
 """
