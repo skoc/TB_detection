@@ -8,7 +8,7 @@ import tumorBudTasks
 ############################################################################################################
 def callUnet(modelType, pathPrefix, layerNum, featNum, dropoutRate, runNo, trainStr, outTypes):
     networkName = modelType + '_tumor_bud'
-    outNos = [2]
+    outNos = [1]
     taskWeights = [1.0]
 
     if trainStr == 'tr':
