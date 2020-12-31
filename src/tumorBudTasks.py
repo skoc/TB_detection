@@ -19,6 +19,8 @@ def returnTumorBudTaskInfo(pathPrefix, networkName, layerNum, featNum, runNo):
     
     tsNames = inputOutput.listAllJPG([], pathPrefix, 'OTC-12-')
     tsNames = inputOutput.listAllJPG(tsNames, pathPrefix, 'OTC-88-')
+    # To check the overfit
+    tsNames = inputOutput.listAllJPG(tsNames, pathPrefix, 'OTC-10-')
     
     return [modelPath, resultPath, trNames, valNames, tsNames]
 ############################################################################################################
