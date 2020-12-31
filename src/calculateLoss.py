@@ -24,7 +24,7 @@ def dice_coef(y_true, y_pred):
 
 def dice_coef_loss(y_weights):
     def dice_loss(y_true, y_pred):
-        loss = 1 - dsc(y_true, y_pred)
+        loss = 1 - dice_coef(y_true, y_pred)
         return loss
     return dice_loss
 ############################################################################################################
