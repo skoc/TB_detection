@@ -157,6 +157,6 @@ def unet(inputHeight, inputWidth, channelNo, outputChannelNos, outputTypes, laye
                                                                    lastDeconv3, lastDeconv4, outputChannelNos, outputTypes)
     model = Model(inputs = inputList, outputs = outputList)
     # model.compile(loss = lossList, loss_weights = taskWeights, optimizer = optimizer, metrics = [calculateLoss.dice_coef])
-    model.compile(loss = lossList, optimizer = optimizer, metrics = [calculateLoss.dice_coef])
+    model.compile(loss = lossList, optimizer = optimizer, metrics = ['accuracy', calculateLoss.dice_coef])
     return model
 ############################################################################################################
