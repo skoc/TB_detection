@@ -36,8 +36,8 @@ def trainModel(modelType, modelFile, trainInputList, trainOutputList, validInput
     inputWidth = trainInputList[0].shape[2]
     channelNo = trainInputList[0].shape[3]
 
-    print("trainInputList Shape: %s" %s str(trainInputList.shape))
-    print("trainOutputList Shape: %s" %s str(trainOutputList.shape))
+    print("trainInputList Shape: %s" % str(trainInputList.shape))
+    print("trainOutputList Shape: %s" % str(trainOutputList.shape))
     
     if modelType == 'unet':
         model = deepModels.unet(inputHeight, inputWidth, channelNo, outputChannelNos, outputTypes, 
