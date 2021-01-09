@@ -28,14 +28,14 @@ def taskLists4UNet(pathPrefix, trNames, valNames):
     [trInputs, trOutputs, trNames] = inputOutput.readOneTumorBudDataset(pathPrefix, trNames, True)    
     [valInputs, valOutputs, valNames] = inputOutput.readOneTumorBudDataset(pathPrefix, valNames, True)
 
-    [trWeights, valWeights] = calculateLoss.trValWeights(trOutputs, valOutputs, 'class-weighted')
+    # [trWeights, valWeights] = calculateLoss.trValWeights(trOutputs, valOutputs, 'class-weighted')
     #[trWeights, valWeights] = calculateLoss.trValWeights(trOutputs, valOutputs, 'same')
     
-    trOutputs = inputOutput.createCategoricalOutput(trOutputs, True)
-    valOutputs = inputOutput.createCategoricalOutput(valOutputs, True)
+    # trOutputs = inputOutput.createCategoricalOutput(trOutputs, True)
+    # valOutputs = inputOutput.createCategoricalOutput(valOutputs, True)
     
-    trInputList = [trInputs, trWeights]
-    valInputList = [valInputs, valWeights]
+    trInputList = [trInputs]#, trWeights]
+    valInputList = [valInputs]#, valWeights]
     trOutputList = [trOutputs]
     valOutputList = [valOutputs]
     
