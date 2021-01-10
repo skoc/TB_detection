@@ -100,12 +100,15 @@ def createInputOutputLostLists(inputHeight, inputWidth, inputs,
     outputList = []
     lossList = []
     
-    inputList.append(inputs)
+    # inputList.append(inputs)
     
     outputWeights1 = Input(shape = (inputHeight, inputWidth))
     [output1, loss1] = outputLayer(lastDeconv1, outputWeights1, outputTypes[0], outputChannelNos[0], 'out1')
-    inputList.append(outputWeights1)
-    outputList.append(output1)
+    # inputList.append(outputWeights1)
+    # EDIT
+    inputList = inputs
+    outputList = output1
+    # outputList.append(output1)
     lossList.append(loss1)
     
     taskNo = len(outputChannelNos)
@@ -133,8 +136,8 @@ def createInputOutputLostLists(inputHeight, inputWidth, inputs,
 # supports multitask architecture upto four different tasks
 def unet(inputHeight, inputWidth, channelNo, outputChannelNos, outputTypes, layerNum, noOfFeatures, dropoutRate, taskWeights):
     filterSize = (3, 3)
-    # optimizer = optimizers.Adadelta()
-    optimizer = optimizers.Adam(0.001)
+    optimizer = optimizers.Adadelta()
+    # optimizer = optimizers.Adam(0.001)
 
     inputs = Input(shape = (inputHeight, inputWidth, channelNo), name = 'input')
     if layerNum == 4:
