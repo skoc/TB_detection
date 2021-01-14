@@ -4,7 +4,7 @@
 #SBATCH --mem-per-cpu=20G
 #SBATCH --time=0-50:00:00     # 10 minutes
 #SBATCH --mail-user=cfk29@case.edu
-#SBATCH -p gpu -C gpu2080 --gres=gpu:1
+#SBATCH -p gpu -C gpu2v100 --gres=gpu:1
 #SBATCH --job-name="Tumor bud"
 #SBATCH --output="log.tb"
 
