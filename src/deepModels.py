@@ -109,7 +109,7 @@ def createInputOutputLostLists(inputHeight, inputWidth, inputs,
     inputList = inputs
     outputList = output1
     # outputList.append(output1)
-    lossList.append(loss1)
+    lossList = loss1
     
     taskNo = len(outputChannelNos)
     if taskNo >= 2:
