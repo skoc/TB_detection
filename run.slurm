@@ -2,14 +2,15 @@
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=20G
-#SBATCH --time=0-50:00:00     # 10 minutes
+#SBATCH --time=0-10:00:00     # 10 minutes
 #SBATCH --mail-user=cfk29@case.edu
-#SBATCH -p gpu -C gpu2v100 --gres=gpu:1
+#SBATCH -p gpu -C gpu2080 --gres=gpu:1
 #SBATCH --job-name="Tumor bud"
 #SBATCH --output="log.tb"
 
 runId=504
 lossType='F'
+gpuId=0
 pathPrefix=/scratch/users/cfk29/TB_detection/
 #13 dice, 14 tv, 15 ftv
 
@@ -30,8 +31,8 @@ module load python/3.6.6
 #pip install opencv-python==3.1.0.4
 
 cd src
-time python3.6 tumorBudMain.py 2 $runId tr $pathPrefix $lossType &&
-time python3.6 tumorBudMain.py 2 $runId ts $pathPrefix $lossType ||
+time python3.6 tumorBudMain.py $gpuId $runId tr $pathPrefix $lossType &&
+time python3.6 tumorBudMain.py $gpuId $runId ts $pathPrefix $lossType ||
 echo "[ERROR] Training step is failed! "
 
 #deactivate
