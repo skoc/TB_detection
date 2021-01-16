@@ -44,7 +44,8 @@ def trainModel(modelType, modelFile, trainInputList, trainOutputList, validInput
                                 layerNum, noOfFeatures, dropoutRate, taskWeights)
     model.summary()
     
-    hist = model.fit(x = trainInputList[0], y = trainOutputList[0][..., np.newaxis], validation_data = (validInputList[0], validOutputList[0]), 
+    hist = model.fit(x = trainInputList[0], y = trainOutputList[0][..., np.newaxis], 
+                     validation_data = (validInputList[0], validOutputList[0][..., np.newaxis]), 
                      shuffle = True, batch_size = batchSize, epochs = maxEpoch, verbose = 1,
                      callbacks = createCallbacks(modelFile, earlyStoppingPatience))
     plotConvergencePlots(hist, modelFile)
