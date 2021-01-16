@@ -107,7 +107,7 @@ def createInputOutputLostLists(inputHeight, inputWidth, inputs,
     # inputList.append(outputWeights1)
     # EDIT
     inputList = inputs
-    outputList = output1[..., np.newaxis]
+    outputList = output1
     # outputList.append(output1)
     lossList = loss1
     
