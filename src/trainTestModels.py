@@ -69,7 +69,7 @@ def testModel(model, testInput, weightMapNo = 1):
     # for i in range(weightMapNo):
     #     weightNullMap = np.ones((testInput.shape[0], testInput.shape[1], testInput.shape[2]))
     #     testInputList.append(weightNullMap)
-    
+    print(testInput.shape)
     predictions = model.predict(testInput, batch_size = 4, verbose = 1)
     return predictions
 ############################################################################################################

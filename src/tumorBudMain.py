@@ -20,7 +20,7 @@ def callUnet(modelType, pathPrefix, layerNum, featNum, dropoutRate, runNo, train
                                                     outNos, outTypes, taskWeights)
         labels = inputOutput.findLabels(probs)
         inputOutput.saveSegmentationLabels(resPath, tsNames, labels, '_lb')
-        inputOutput.saveProbabilities(resPath, tsNames, probs[:,:,:,1], '_pr')
+        inputOutput.saveProbabilities(resPath, tsNames, probs, '_pr')
         return [probs, actual]
 ############################################################################################################
 def main(argv):
