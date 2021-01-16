@@ -64,12 +64,12 @@ def loadModel(modelType, modelFile, testInput, taskWeights, noOfFeatures, dropou
     return model
 ############################################################################################################
 def testModel(model, testInput, weightMapNo = 1):
-    testInputList = []
-    testInputList.append(testInput)
-    for i in range(weightMapNo):
-        weightNullMap = np.ones((testInput.shape[0], testInput.shape[1], testInput.shape[2]))
-        testInputList.append(weightNullMap)
+    # testInputList = []
+    # testInputList.append(testInput)
+    # for i in range(weightMapNo):
+    #     weightNullMap = np.ones((testInput.shape[0], testInput.shape[1], testInput.shape[2]))
+    #     testInputList.append(weightNullMap)
     
-    predictions = model.predict(testInputList, batch_size = 4, verbose = 1)
+    predictions = model.predict(testInput, batch_size = 4, verbose = 1)
     return predictions
 ############################################################################################################
