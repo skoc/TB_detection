@@ -31,7 +31,7 @@ module load python/3.6.6
 #pip install opencv-python==3.1.0.4
 
 cd src
-time python3.6 tumorBudMain.py $gpuId $runId tr $pathPrefix $lossType &&
+# time python3.6 tumorBudMain.py $gpuId $runId tr $pathPrefix $lossType &&
 time python3.6 tumorBudMain.py $gpuId $runId ts $pathPrefix $lossType ||
 echo "[ERROR] Training step is failed! "
 
