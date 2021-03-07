@@ -8,7 +8,7 @@
 #SBATCH --job-name="Tumor bud"
 #SBATCH --output="log.tb"
 
-runId=504
+runId=001
 lossType='F'
 gpuId=0
 pathPrefix=/scratch/users/cfk29/TB_detection/
