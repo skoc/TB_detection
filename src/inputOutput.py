@@ -104,3 +104,15 @@ def saveSegmentationLabels(dirPath, names, labels, postfix):
         np.savetxt(fname, labels[i], fmt = '%1.0f')
     print('Labels are saved')
 ############################################################################################################
+def loadSegmentationLabelImage(imagePath):
+    im = cv2.imread(imagePath)
+    im = im[:, :, 0]>0
+    return im
+############################################################################################################
+def loadSegmentationLabelTxt(txtPath):
+    im = np.loadtxt(txtPath) > 0
+    return im
+############################################################################################################
+def loadProbabilitiesTxt(txtPath):
+    im = np.loadtxt(txtPath)
+    return im

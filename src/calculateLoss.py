@@ -14,19 +14,15 @@ from keras.utils import np_utils
 # Region-based Loss Functions
 ############################################################################################################
 # Dice Loss
-def dice_coef(y_true, y_pred):
-    smooth = 1.
-    y_true_f = K.flatten(y_true)
-    y_pred_f = K.flatten(y_pred)
-    intersection = K.sum(y_true_f * y_pred_f)
-    score = (2. * intersection + smooth) / (K.sum(y_true_f) + K.sum(y_pred_f) + smooth)
-    return score
+def dice_coef(y_true, y_pred, smooth=1):
+    intersection = K.sum(K.abs(y_true * y_pred), axis=-1)
+    return (2. * intersection + smooth) / (K.sum(K.square(y_true),-1) + K.sum(K.square(y_pred),-1) + smooth)
 
 def dice_coef_loss(y_weights):
-    def dice_loss(y_true, y_pred):
-        loss = 1 - dice_coef(y_true, y_pred)
-        return loss
-    return dice_loss
+    def loss_fn(y_true, y_pred):
+        loss = 1-dice_coef(y_true, y_pred)
+        return K.mean(loss)
+    return loss_fn
 ############################################################################################################
 # Tversky Loss
 """
@@ -72,7 +68,8 @@ def focal_loss(y_weights):
         gamma, alpha = 2.0, 0.25 # these values work best accord. paper
         pt_1 = tf.where(tf.equal(y_true, 1), y_pred, tf.ones_like(y_pred))
         pt_0 = tf.where(tf.equal(y_true, 0), y_pred, tf.zeros_like(y_pred))
-        return -K.mean(alpha * K.pow(1. - pt_1, gamma) * K.log(pt_1)) - K.mean((1 - alpha) * K.pow(pt_0, gamma) * K.log(1. - pt_0))
+        return -K.mean(alpha * K.pow(1. - pt_1, gamma) * K.log(pt_1))-K.mean((1-alpha) * K.pow( pt_0, gamma) * K.log(1. - pt_0))
+
     return loss_fn
 
 ############################################################################################################
