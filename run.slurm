@@ -10,7 +10,7 @@
 
 runId=001
 lossType='F'
-gpuId=0
+gpuId=1
 pathPrefix=/scratch/users/cfk29/TB_detection/
 layerNum=5
 #13 dice, 14 tv, 15 ftv
