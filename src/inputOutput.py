@@ -45,6 +45,9 @@ def readOneTumorBudImage(datasetPath, imageName, goldFlag):
     imageFileName = datasetPath + 'data/tile/' + imageName + '.jpg'
     segmFileName = datasetPath + 'data/mask/' + imageName + '.png'
     
+    print(f'imageFileName: {imageFileName}')
+    print(f'segmFileName: {segmFileName}')
+    
     img = cv2.imread(imageFileName)
     img = img[...,::-1] # convert from BGR to RGB
     img = normalizeImage(img)
