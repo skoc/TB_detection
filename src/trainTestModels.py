@@ -3,7 +3,8 @@ import inputOutput
 import os
 import numpy as np
 #import matplotlib.pyplot as plt
-from keras.callbacks import ModelCheckpoint, EarlyStopping
+# from keras.callbacks import ModelCheckpoint, EarlyStopping
+from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 from keras.models import Model
 from keras.models import load_model
 from keras.utils import np_utils
