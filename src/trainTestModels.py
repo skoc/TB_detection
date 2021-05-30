@@ -32,7 +32,7 @@ def plotConvergencePlots(hist, modelFile):
 ############################################################################################################
 def trainModel(modelType, modelFile, trainInputList, trainOutputList, validInputList, validOutputList, 
                taskWeights, noOfFeatures, dropoutRate, layerNum = 4, 
-               outputChannelNos = [2], outputTypes = ['C'], earlyStoppingPatience = 50, batchSize = 1, maxEpoch = 1000):
+               outputChannelNos = [2], outputTypes = ['C'], earlyStoppingPatience = 50, batchSize = 1, maxEpoch = 5):
     inputHeight = trainInputList[0].shape[1]
     inputWidth = trainInputList[0].shape[2]
     channelNo = trainInputList[0].shape[3]
