@@ -1,11 +1,15 @@
 import tensorflow as tf
-from keras import backend as K
+from tensorflow.keras import backend as K
 import numpy as np
 
-from keras.models import Model
-from keras.layers import Input, Convolution2D, MaxPooling2D, UpSampling2D, Dropout, concatenate
-from keras.layers.core import Layer, Dense, Activation, Flatten, Reshape, Permute, Lambda
-from keras import objectives, optimizers, losses
+# from keras.models import Model
+# from keras.layers import Input, Convolution2D, MaxPooling2D, UpSampling2D, Dropout, concatenate
+# from keras.layers.core import Layer, Dense, Activation, Flatten, Reshape, Permute, Lambda
+# from keras import objectives, optimizers, losses
+
+from tensorflow.keras.models import *
+from tensorflow.keras.layers import *
+from tensorflow.keras.optimizers import *
 
 import calculateLoss
 
