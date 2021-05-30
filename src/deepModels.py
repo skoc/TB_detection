@@ -13,6 +13,9 @@ from tensorflow.keras import optimizers
 
 import calculateLoss
 
+from tensorflow.python.framework.ops import disable_eager_execution
+disable_eager_execution()
+
 ############################################################################################################
 def unetOneBlock(blockInput, noOfFeatures, filterSize, dropoutRate):
     blockOutput = Convolution2D(noOfFeatures, filterSize, activation = 'relu', padding = 'same', 
