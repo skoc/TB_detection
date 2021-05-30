@@ -39,13 +39,14 @@ def returnTumorBudTaskInfo(pathPrefix, networkName, layerNum, featNum, runNo):
     valNames = inputOutput.listAllJPG(valNames, pathPrefix, 'OTC-152-')
 
 
-    tsNames = inputOutput.listAllJPG([], pathPrefix, 'OTC-104-')
-    tsNames = inputOutput.listAllJPG(tsNames, pathPrefix, 'OTC-107-')
-    tsNames = inputOutput.listAllJPG(tsNames, pathPrefix, 'OTC-123-')
-    tsNames = inputOutput.listAllJPG(tsNames, pathPrefix, 'OTC-129-')
-    tsNames = inputOutput.listAllJPG(tsNames, pathPrefix, 'OTC-131-')
-    tsNames = inputOutput.listAllJPG(tsNames, pathPrefix, 'OTC-134-')
-    tsNames = inputOutput.listAllJPG(tsNames, pathPrefix, 'OTC-1-')
+    tsNames = inputOutput.listAllJPG([], pathPrefix, 'OTC-53-')
+    # tsNames = inputOutput.listAllJPG([], pathPrefix, 'OTC-104-')
+    # tsNames = inputOutput.listAllJPG(tsNames, pathPrefix, 'OTC-107-')
+    # tsNames = inputOutput.listAllJPG(tsNames, pathPrefix, 'OTC-123-')
+    # tsNames = inputOutput.listAllJPG(tsNames, pathPrefix, 'OTC-129-')
+    # tsNames = inputOutput.listAllJPG(tsNames, pathPrefix, 'OTC-131-')
+    # tsNames = inputOutput.listAllJPG(tsNames, pathPrefix, 'OTC-134-')
+    # tsNames = inputOutput.listAllJPG(tsNames, pathPrefix, 'OTC-1-')
 
 
     return [modelPath, resultPath, trNames, valNames, tsNames]
