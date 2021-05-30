@@ -8,8 +8,8 @@ from keras.utils import np_utils
 ############################################################################################################
 def returnTumorBudTaskInfo(pathPrefix, networkName, layerNum, featNum, runNo):
     modelName = networkName + '_L' + str(layerNum) + '_F' + str(featNum) + '_run' + str(runNo)
-    modelPath = pathPrefix + 'models/' + modelName + '.hdf5'
-    resultPath = pathPrefix + 'results/' + modelName
+    modelPath = './' + 'models/' + modelName + '.hdf5'
+    resultPath = './' + 'results/' + modelName
     
     # New Data Split Update Added: 03/03/2021
     trNames = inputOutput.listAllJPG([], pathPrefix, 'OTC-13-')
