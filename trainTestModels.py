@@ -3,7 +3,7 @@ import inputOutput
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-from keras.callbacks import ModelCheckpoint, EarlyStopping
+from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 from keras.models import Model
 from keras.models import load_model
 from keras.utils import np_utils
@@ -14,8 +14,10 @@ def createCallbacks(modelFile, earlyStoppingPatience):
                                  save_weights_only = True, mode = 'auto', period = 1)
     earlystopping = EarlyStopping(patience = earlyStoppingPatience, monitor = 'val_loss', verbose = 1, 
                                   restore_best_weights = True, min_delta=0.00001)
+    # Reduce lr_rate on plateau
+    reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=10, verbose=1, mode='min', cooldown=1, min_lr=0.000001)
     #monitor = 'val_categorical_accuracy'
-    return [checkpoint, earlystopping]
+    return [checkpoint, earlystopping, reduce_lr]
 ############################################################################################################
 def plotConvergencePlots(hist, modelFile):
     fig = plt.figure()
