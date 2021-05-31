@@ -68,10 +68,11 @@ def taskLists4UNet(pathPrefix, trNames, valNames):
     
     return [trInputList, trOutputList, valInputList, valOutputList]
 ############################################################################################################
-def trainUnetForTumorBudDetection(modelType, pathPrefix, networkName, runNo, layerNum, featNum, dropoutRate, outNos, outTypes, taskWeights):
+def trainUnetForTumorBudDetection(modelType, pathPrefix, networkName, runNo, layerNum, featNum, dropoutRate, outNos, outTypes, taskWeights, residual):
     [modelPath, _, trNames, valNames, _] = returnTumorBudTaskInfo(pathPrefix, networkName, layerNum, featNum, runNo)
     [trInList, trOutList, valInList, valOutList] = taskLists4UNet(pathPrefix, trNames, valNames)
-    trainTestModels.trainModel(modelType, modelPath, trInList, trOutList, valInList, valOutList, taskWeights, featNum, dropoutRate, layerNum, outNos, outTypes)
+    trainTestModels.trainModel(modelType, modelPath, trInList, trOutList, valInList, valOutList, \
+        taskWeights, featNum, dropoutRate, layerNum, outNos, outTypes, residual)
 ############################################################################################################
 def testUnetForTumorBudDetection(modelType, pathPrefix, networkName, runNo, layerNum, featNum, dropoutRate, outNos, outTypes, taskWeights):
     [modelPath, resultPath, _, _, tsNames] = returnTumorBudTaskInfo(pathPrefix, networkName, layerNum, featNum, runNo)    

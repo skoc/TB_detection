@@ -17,6 +17,52 @@ from tensorflow.python.framework.ops import disable_eager_execution
 disable_eager_execution()
 
 ############################################################################################################
+def unetOneResBlock(blockInput, noOfFeatures, filterSize, dropoutRate):
+    blockOutput = Convolution2D(noOfFeatures, filterSize, activation = 'relu', padding = 'same', 
+                                kernel_initializer = 'glorot_uniform')(blockInput)
+    blockOutput = Dropout(dropoutRate)(blockOutput)
+    blockOutput = Convolution2D(noOfFeatures, filterSize, activation = 'relu', padding = 'same', 
+                                kernel_initializer = 'glorot_uniform')(blockOutput)
+
+    # Residual Conneciton
+    shortcut = Convolution2D(noOfFeatures, kernel_size=(1, 1))(blockInput)
+    output = Add()[blockOutput, shortcut]
+    
+    return output
+############################################################################################################
+def unetOneResEncoderBlock(blockInput, noOfFeatures, filterSize, dropoutRate):
+    conv = unetOneResBlock(blockInput, noOfFeatures, filterSize, dropoutRate)
+    pool = MaxPooling2D(pool_size = (2, 2))(conv)
+    return [conv, pool]
+############################################################################################################
+def oneResEncoderPathX(inputs, noOfFeatures, filterSize, dropoutRate, noOfLayers):
+    encoder = []
+    poolR = None
+    for i in range(noOfLayers):
+        if i == 0:
+            [conv, poolR] = unetOneResEncoderBlock(inputs, noOfFeatures, filterSize, dropoutRate)
+        else:
+            [conv, poolR] = unetOneResEncoderBlock(poolR, pow(2, i) * noOfFeatures, filterSize, dropoutRate)
+        encoder.append(conv)
+    encoder.append(poolR)
+    return encoder
+############################################################################################################
+def unetOneResDecoderBlock(blockInput, longSkipInput, noOfFeatures, filterSize, dropoutRate):
+    upR = concatenate([UpSampling2D(size = (2, 2))(blockInput), longSkipInput], axis = 3)
+    conv = unetOneResBlock(upR, noOfFeatures, filterSize, dropoutRate)    
+    return conv
+############################################################################################################
+def oneResDecoderPathX(convs, noOfFeatures, filterSize, dropoutRate):
+    noOfLayers = len(convs)-1
+    deconv = None
+    reversed = convs[::-1]
+    for i in range(noOfLayers):
+        if i == 0:
+            deconv = unetOneResDecoderBlock(reversed[0], reversed[1], pow(2, noOfLayers-1) * noOfFeatures, filterSize, dropoutRate)
+        else:
+            deconv = unetOneResDecoderBlock(deconv, reversed[i+1], pow(2, noOfLayers-i-1) * noOfFeatures, filterSize, dropoutRate)
+    return deconv
+############################################################################################################
 def unetOneBlock(blockInput, noOfFeatures, filterSize, dropoutRate):
     blockOutput = Convolution2D(noOfFeatures, filterSize, activation = 'relu', padding = 'same', 
                                 kernel_initializer = 'glorot_uniform')(blockInput)
@@ -203,17 +249,26 @@ def unet2(inputHeight, inputWidth, channelNo, outputChannelNos, outputTypes, lay
     model.compile(loss = lossList, loss_weights = taskWeights, optimizer = optimizer, metrics = ['categorical_accuracy'])
     return model
 ############################################################################################################
-def unet(inputHeight, inputWidth, channelNo, outputChannelNos, outputTypes, layerNum, noOfFeatures, dropoutRate, taskWeights):
+def unet(inputHeight, inputWidth, channelNo, outputChannelNos, outputTypes, layerNum, noOfFeatures, dropoutRate, taskWeights, residual):
     filterSize = (3, 3)
     optimizer = optimizers.Adadelta()
     
     inputs = Input(shape = (inputHeight, inputWidth, channelNo), name = 'input')
-    convs = oneEncoderPathX(inputs, noOfFeatures, filterSize, dropoutRate, layerNum)
-    lastConv = unetOneBlock(convs[-1], pow(2, layerNum) * noOfFeatures, filterSize, dropoutRate)
+    if not residual:
+        convs = oneEncoderPathX(inputs, noOfFeatures, filterSize, dropoutRate, layerNum)
+        lastConv = unetOneBlock(convs[-1], pow(2, layerNum) * noOfFeatures, filterSize, dropoutRate)
+    else:
+        convs = oneResEncoderPathX(inputs, noOfFeatures, filterSize, dropoutRate, layerNum)
+        lastConv = unetOneResBlock(convs[-1], pow(2, layerNum) * noOfFeatures, filterSize, dropoutRate)
+
     convs[-1] = lastConv
     lastDeconvs = []
+
     for i in range(len(taskWeights)):
-        lastDeconv = oneDecoderPathX(convs, noOfFeatures, filterSize, dropoutRate)
+        if not residual:
+            lastDeconv = oneDecoderPathX(convs, noOfFeatures, filterSize, dropoutRate)
+        else:
+            lastDeconv = oneResDecoderPathX(convs, noOfFeatures, filterSize, dropoutRate)
         lastDeconvs.append(lastDeconv)
 
     [inputList, outputList, lossList] = createInputOutputLostLists(inputHeight, inputWidth, inputs, lastDeconvs, outputChannelNos, outputTypes)

@@ -6,14 +6,14 @@ import sys, getopt
 
 import tumorBudTasks
 ############################################################################################################
-def callUnet(modelType, pathPrefix, layerNum, featNum, dropoutRate, runNo, trainStr, outTypes):
+def callUnet(modelType, pathPrefix, layerNum, featNum, dropoutRate, runNo, trainStr, outTypes, residual):
     networkName = modelType + '_tumor_bud'
     outNos = [2]
     taskWeights = [1.0]
 
     if trainStr == 'tr':
         tumorBudTasks.trainUnetForTumorBudDetection(modelType, pathPrefix, networkName, runNo, layerNum, 
-                                                    featNum, dropoutRate, outNos, outTypes, taskWeights)
+                                                    featNum, dropoutRate, outNos, outTypes, taskWeights,residual)
     else:
         [probs, actual, tsNames, resPath] = tumorBudTasks.testUnetForTumorBudDetection(modelType, pathPrefix, 
                                                     networkName, runNo, layerNum, featNum, dropoutRate, 
@@ -36,11 +36,12 @@ def main(argv):
     runNo = int(argv[1])
     trainStr = argv[2]
     outTypes = [argv[5]]
+    residual = True
 
     #os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
     #os.environ["CUDA_VISIBLE_DEVICES"] = gpu
     
-    callUnet('unet', pathPrefix, layerNum, featNum, dropoutRate, runNo, trainStr, outTypes)
+    callUnet('unet', pathPrefix, layerNum, featNum, dropoutRate, runNo, trainStr, outTypes, residual)
 ############################################################################################################
 if __name__ == "__main__":
    main(sys.argv[1:])
