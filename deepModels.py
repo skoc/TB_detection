@@ -247,7 +247,8 @@ def unet2(inputHeight, inputWidth, channelNo, outputChannelNos, outputTypes, lay
 ############################################################################################################
 def unet(inputHeight, inputWidth, channelNo, outputChannelNos, outputTypes, layerNum, noOfFeatures, dropoutRate, taskWeights, residual=True):
     filterSize = (3, 3)
-    optimizer = optimizers.Adadelta()
+    # optimizer = optimizers.Adadelta()
+    optimizer = optimizers.Adam(learning_rate=0.001)
     
     inputs = Input(shape = (inputHeight, inputWidth, channelNo), name = 'input')
     if not residual:
