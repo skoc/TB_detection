@@ -1,3 +1,4 @@
+from os import name
 import tensorflow as tf
 from tensorflow.keras import backend as K
 import numpy as np
@@ -26,7 +27,7 @@ def unetOneResBlock(blockInput, noOfFeatures, filterSize, dropoutRate):
 
     # Residual Conneciton
     shortcut = Convolution2D(noOfFeatures, kernel_size=(1, 1))(blockInput)
-    output = Add()[blockOutput, shortcut]
+    output = Add()([blockOutput, shortcut])
     
     return output
 ############################################################################################################
