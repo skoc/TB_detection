@@ -257,7 +257,7 @@ def dice_coef_loss(y_true, y_pred):
 def unet(inputHeight, inputWidth, channelNo, outputChannelNos, outputTypes, layerNum, noOfFeatures, dropoutRate, taskWeights, residual=True):
     filterSize = (3, 3)
     # optimizer = optimizers.Adadelta()
-    optimizer = optimizers.Adam(learning_rate=0.001)
+    optimizer = optimizers.Adam(lr=0.001)
     
     inputs = Input(shape = (inputHeight, inputWidth, channelNo), name = 'input')
     if not residual:
