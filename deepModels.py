@@ -245,6 +245,15 @@ def unet2(inputHeight, inputWidth, channelNo, outputChannelNos, outputTypes, lay
     model.compile(loss = lossList, loss_weights = taskWeights, optimizer = optimizer, metrics = ['categorical_accuracy'])
     return model
 ############################################################################################################
+def dice_coef(y_true, y_pred, smooth = 1.):
+    y_true_f = K.flatten(y_true)
+    y_pred_f = K.flatten(y_pred)
+    intersection = K.sum(y_true_f * y_pred_f)
+    return (2. * intersection + smooth) / (K.sum(y_true_f*y_true_f) + K.sum(y_pred_f*y_pred_f) + smooth)
+
+def dice_coef_loss(y_true, y_pred):
+    return 1.-dice_coef(y_true, y_pred)
+
 def unet(inputHeight, inputWidth, channelNo, outputChannelNos, outputTypes, layerNum, noOfFeatures, dropoutRate, taskWeights, residual=True):
     filterSize = (3, 3)
     # optimizer = optimizers.Adadelta()
@@ -271,5 +280,6 @@ def unet(inputHeight, inputWidth, channelNo, outputChannelNos, outputTypes, laye
     [inputList, outputList, lossList] = createInputOutputLostLists(inputHeight, inputWidth, inputs, lastDeconvs, outputChannelNos, outputTypes)
 
     model = Model(inputs = inputList, outputs = outputList)
-    model.compile(loss = lossList, loss_weights = taskWeights, optimizer = optimizer, metrics = ['categorical_accuracy'])
+    # model.compile(loss = lossList, loss_weights = taskWeights, optimizer = optimizer, metrics = ['categorical_accuracy'])
+    model.compile(loss=dice_coef_loss, optimizer=optimizer, metrics=[dice_coef])
     return model
